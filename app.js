@@ -1,6 +1,11 @@
 const yargs = require('yargs');
 
-const common = require('./geocode/common');
+const geocode = require('./geocode/geocode');
+const weather = require('./weather/weather');
+
+/*
+  @author: Ankur Srivastava
+*/
 
 //Using yargs to get user address from command line
 //Like $node app.js a Hill Ridge Springs Hyderabad
@@ -18,11 +23,19 @@ const argv = yargs
     })
     .help()
     .argv;
-
-common.geocodeAddress(argv.address, (errorCode, response)=>{
+//Call the function that makes a call to Google Geocode API and returns location details
+geocode.geocodeAddress(argv.address, (errorCode, response)=>{
   if(errorCode){
     console.log(JSON.stringify(errorCode, undefined, 2));
   }else{
     console.log(JSON.stringify(response, undefined, 2));
+    //Call the function that makes a call to Forecast API and returns temperature
+    weather.getWeather(response.lat,response.lon,(error, response)=>{
+      if(error){
+          console.log(error);
+      }else{
+          console.log(response);
+      }
+    });
   }
 });

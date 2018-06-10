@@ -1,10 +1,12 @@
 const request = require('request');
 
+var geocode_url = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+var geocode_api_key = 'AIzaSyBaalIyifyyHg4rIj2gDMIUBTWldBtweQo';
+
 var geocodeAddress = function(address, callback){
   var input_address = encodeURIComponent(address);
-  var message = '';
   request({
-    url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+input_address+'&key=AIzaSyBaalIyifyyHg4rIj2gDMIUBTWldBtweQo',
+    url: geocode_url+input_address+'&key='+geocode_api_key,
     json:true
   }, (error, response, body)=>{
     if(error){
