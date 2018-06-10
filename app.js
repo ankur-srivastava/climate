@@ -1,5 +1,6 @@
-const request = require('request');
 const yargs = require('yargs');
+
+const common = require('./geocode/common');
 
 //Using yargs to get user address from command line
 //Like $node app.js a Hill Ridge Springs Hyderabad
@@ -18,20 +19,10 @@ const argv = yargs
     .help()
     .argv;
 
-var input_address = encodeURIComponent(argv.a);
-
-request({
-  url: 'http://maps.googleapis.com/maps/api/geocode/json?address='+input_address,
-  json:true
-}, (error, response, body)=>{
-  if(error){
-      console.log(JSON.stringify(error, undefined, 2));
+common.geocodeAddress(argv.address, (errorCode, response)=>{
+  if(errorCode){
+    console.log(JSON.stringify(errorCode, undefined, 2));
   }else{
-      var address = 'Address: '+body.results[0].formatted_address;
-      var lat = 'Latitude: '+body.results[0].geometry.location.lat;
-      var lon = 'Longitude: '+body.results[0].geometry.location.lng;
-      console.log(address);
-      console.log(lat);
-      console.log(lon);
+    console.log(JSON.stringify(response, undefined, 2));
   }
 });
