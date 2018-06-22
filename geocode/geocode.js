@@ -1,7 +1,7 @@
 const request = require('request');
 
 var geocode_url = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-var geocode_api_key = 'AIzaSyBaalIyifyyHg4rIj2gDMIUBTWldBtweQo';
+var geocode_api_key = '*****';
 
 var geocodeAddress = function(address, callback){
   var input_address = encodeURIComponent(address);
